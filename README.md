@@ -109,12 +109,12 @@ No build tools or server setup is required — this is a purely static website.
 
 ## Team
 
-| Name | Tasks |
-|------|-------|
-| **Thomas Nageh** | Home page, Laptops page, Product search |
-| **Jolie Fayez** | Login page, Phones page |
-| **Jana Khaled** | Sign Up page, Accessories page |
-| **Omar Abdelaziz** | Cameras page, Cart page |
+| Name 
+|------
+| **Thomas Nageh** 
+| **Jolie Fayez**
+| **Jana Khaled**
+| **Omar Abdelaziz**
 
 ---
 

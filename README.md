@@ -97,13 +97,7 @@ No build tools or server setup is required — this is a purely static website.
    ```
 
 2. **Open the site**
-   - Open `index.html` directly in your browser, **or**
-   - Serve it with any static file server, for example:
-     ```bash
-     # Python 3
-     python -m http.server 8080
-     ```
-   Then navigate to `http://localhost:8080`.
+   - Open `index.html` directly in your browser
 
 ---
 

@@ -61,21 +61,42 @@ function closeSideBar()
 function plus()
 {
     let qty = document.getElementById("sidebar-qty");
-    qty.value = parseInt(qty.value, 10) + 1;
+    qty.value = Number(qty.value) + 1;
 }
 
 function minus()
 {
     let qty = document.getElementById("sidebar-qty");
-    if(parseInt(qty.value, 10) > 1)
+    if(Number(qty.value) > 1)
     {
-        qty.value = parseInt(qty.value, 10) - 1;
+        qty.value = Number(qty.value) - 1;
     }
 }
 
 function addToCard()
 {
     let qty = document.getElementById("sidebar-qty");
-    localStorage.setItem(openProduct.id, qty.value);
+    let product = {
+        "type":"camera",
+        "image":openProduct.images[0],
+        "title":openProduct.title,
+        "description":openProduct.description,
+        "price":openProduct.price,
+        "quantity":qty.value,
+    };
+    console.log(product);
+    let productString = JSON.stringify(product);
+    console.log(productString);
+    let isExisting = localStorage.getItem(openProduct.id)
+    if(isExisting)
+    {
+        let existingProduct = JSON.parse(isExisting);
+        existingProduct.quantity = Number(existingProduct.quantity) + Number(qty.value);
+        localStorage.setItem(openProduct.id, JSON.stringify(existingProduct));
+    }
+    else
+    {
+        localStorage.setItem(openProduct.id, productString);
+    }
     closeSideBar();
 }

@@ -34,6 +34,9 @@ function showProducts()
             <button class="primary-btn" onclick="removeItem(${key})">
             Remove
             </button>
+            <button class="primary-btn mt-5">
+            Buy
+            </button>
         </div>`;
         total+= Number(product.quantity) * Number(product.price)
         col.appendChild(card);

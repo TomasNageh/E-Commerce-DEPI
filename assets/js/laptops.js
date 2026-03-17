@@ -112,7 +112,7 @@ const loadProducts = async function () {
 /////////////////////////////////////////////////
 // Search
 
-const runProductSearch = function () {
+const Search = function () {
   const searchInput = document.querySelector("input[placeholder*='Search']");
   if (!searchInput) return;
 
@@ -143,11 +143,11 @@ sidebarOverlay.addEventListener("click", closeSideBar);
 
 const searchInput = document.querySelector("input[placeholder*='Search']");
 if (searchInput) {
-  searchInput.addEventListener("keyup", runProductSearch);
+  searchInput.addEventListener("keyup", Search);
   searchInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      runProductSearch();
+      Search();
     }
   });
 }

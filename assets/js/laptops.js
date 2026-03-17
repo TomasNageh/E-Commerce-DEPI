@@ -100,7 +100,7 @@ const addToCart = function () {
 
 const loadProducts = async function () {
   const apiResponse = await fetch(
-    "https://dummyjson.com/products/category/laptops",
+    "https://dummyjson.com/products/search?q=laptop",
   );
   const json = await apiResponse.json();
   console.log(json);

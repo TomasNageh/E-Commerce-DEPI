@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict";
 
 let openProduct = null;
@@ -139,3 +140,132 @@ if (searchInput) {
 }
 
 loadProducts();
+=======
+// phone products API with filtering
+// https://dummyjson.com/products/search?q=phone
+
+let xhr = new XMLHttpRequest();
+xhr.open("GET", "https://dummyjson.com/products/search?q=phone");
+xhr.onload = () => {
+    let data = JSON.parse(xhr.responseText);
+    let allProducts = data.products;
+    
+    // Filter to only include actual phones (exclude accessories)
+    let phones = allProducts.filter(product => {
+        let title = product.title.toLowerCase();
+        let category = product.category.toLowerCase();
+        
+        // Exclude accessories like airpods, chargers, cases, screen protectors, etc.
+        let excludeKeywords = [
+            'airpod', 'earphone', 'earbuds', 'charger', 'cable', 'case',
+            'screen protector', 'tempered glass', 'holder', 'stand',
+            'adapter', 'battery', 'power bank', 'usb'
+        ];
+        
+        // Include only if it's a phone
+        let phoneKeywords = ['phone', 'smartphone', 'mobile'];
+        
+        // Check if it's actually a phone
+        let isPhone = phoneKeywords.some(keyword => title.includes(keyword) || category.includes(keyword));
+        
+        // Check if it's an excluded accessory
+        let isAccessory = excludeKeywords.some(keyword => title.includes(keyword));
+        
+        return isPhone && !isAccessory;
+    });
+    
+    console.log(phones);
+    showProducts(phones);
+}
+xhr.send();
+
+let openProduct = null;
+
+function showProducts(products) {
+    let container = document.querySelector("#container");
+    let row = document.createElement("div");
+    row.className = "row";
+
+    if(products.length === 0) {
+        container.innerHTML = "<p style='text-align:center; padding:20px;'>No phones available</p>";
+        return;
+    }
+
+    for(let i=0; i<products.length; i++) {
+        let col = document.createElement("div");
+        col.className = "col-md-3 col-xs-6";
+
+        let card = document.createElement("div");
+        card.className = "product";
+        card.innerHTML = 
+        `<div class="product-img">
+            <img src="${products[i].images[0]}" alt="${products[i].title}">
+        </div>
+        <div class="product-body">
+            <p class="product-category">Phone</p>
+            <h3 class="product-name">${products[i].title}</h3>
+            <h4 class="product-price">$ ${products[i].price}</h4>
+        </div>`;
+        
+        let product = products[i];
+        card.addEventListener("click", () => {
+            openProduct = product;
+            document.getElementById("sidebar-img").src = product.images[0];
+            document.getElementById("sidebar-img").alt = product.title;
+            document.getElementById("sidebar-title").innerText = product.title;
+            document.getElementById("sidebar-price").innerText = "$ " + product.price;
+            document.getElementById("sidebar-description").innerText = product.description;
+            document.getElementById("sidebar-qty").value = 1;
+            document.getElementById("sidebar-overlay").classList.add("show");
+            document.getElementById("product-sidebar").classList.add("show");
+        });
+        
+        col.appendChild(card);
+        row.appendChild(col);
+    }
+    container.appendChild(row);
+}   
+
+function closeSideBar() {
+    document.getElementById("sidebar-overlay").classList.remove("show");
+    document.getElementById("product-sidebar").classList.remove("show");
+}
+
+function plus() {
+    let qty = document.getElementById("sidebar-qty");
+    qty.value = Number(qty.value) + 1;
+}
+
+function minus() {
+    let qty = document.getElementById("sidebar-qty");
+    if(Number(qty.value) > 1) {
+        qty.value = Number(qty.value) - 1;
+    }
+}
+
+function addToCard() {
+    let qty = document.getElementById("sidebar-qty");
+    let product = {
+        "type":"phone",
+        "image":openProduct.images[0],
+        "title":openProduct.title,
+        "description":openProduct.description,
+        "price":openProduct.price,
+        "quantity":qty.value,
+    };
+    console.log(product);
+    let productString = JSON.stringify(product);
+    console.log(productString);
+    
+    let isExisting = localStorage.getItem(openProduct.id)
+    if(isExisting) {
+        let existingProduct = JSON.parse(isExisting);
+        existingProduct.quantity = Number(existingProduct.quantity) + Number(qty.value);
+        localStorage.setItem(openProduct.id, JSON.stringify(existingProduct));
+    }
+    else {
+        localStorage.setItem(openProduct.id, productString);
+    }
+    closeSideBar();
+}
+>>>>>>> 9c8ca47473bd236b4f3b396c369dd53b2e9b2ee8

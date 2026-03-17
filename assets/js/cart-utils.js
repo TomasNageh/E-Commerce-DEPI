@@ -2,7 +2,6 @@
 function removeItem(key)
 {
     localStorage.removeItem(key);
-    showProducts();
 }
 
 function showProducts()

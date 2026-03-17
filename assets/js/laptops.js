@@ -110,9 +110,47 @@ const loadProducts = async function () {
 };
 
 /////////////////////////////////////////////////
+// Search
+
+const runProductSearch = function () {
+  const searchInput = document.querySelector("input[placeholder*='Search']");
+  if (!searchInput) return;
+
+  const query = searchInput.value.trim().toLowerCase();
+  const productCards = document.querySelectorAll(".product");
+
+  for (let i = 0; i < productCards.length; i++) {
+    const card = productCards[i];
+    const title = card.querySelector(".product-name")?.innerText || "";
+    const category = card.querySelector(".product-category")?.innerText || "";
+    const cardText = `${title} ${category}`.toLowerCase();
+    const column = card.closest(".col-md-3, .col-xs-6");
+
+    if (!column) continue;
+
+    if (query === "" || cardText.indexOf(query) !== -1) {
+      column.style.display = "";
+    } else {
+      column.style.display = "none";
+    }
+  }
+};
+
+/////////////////////////////////////////////////
 // Event Handlers
 
 sidebarOverlay.addEventListener("click", closeSideBar);
+
+const searchInput = document.querySelector("input[placeholder*='Search']");
+if (searchInput) {
+  searchInput.addEventListener("keyup", runProductSearch);
+  searchInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      runProductSearch();
+    }
+  });
+}
 
 /////////////////////////////////////////////////
 // Initiate

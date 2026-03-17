@@ -21,6 +21,67 @@
       href="../assets/css/font-awesome.min.css"
     />
     <link type="text/css" rel="stylesheet" href="../assets/css/style.css" />
+    <style>
+      #sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      #sidebar-overlay.show {
+        display: block;
+      }
+
+      #product-sidebar {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 350px;
+        height: 100%;
+        background: white;
+        z-index: 1000;
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+        padding: 30px 20px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        display: none;
+      }
+
+      #product-sidebar.show {
+        display: block;
+      }
+
+      #sidebar-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      #product-sidebar .product-img {
+        text-align: center;
+        margin-bottom: 20px;
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 6px;
+      }
+
+      #product-sidebar .product-img img {
+        max-width: 100%;
+        max-height: 180px;
+        object-fit: contain;
+      }
+
+      #product-sidebar .input-number {
+        width: 120px;
+        margin: 20px 0;
+      }
+    </style>
   </head>
   <body>
     <nav id="navigation">
@@ -42,8 +103,52 @@
 
     <div class="section">
       <div class="container">
-        <div class="section-title"><h3 class="title">Accessories</h3></div>
-        <p>This page is ready for accessories from your API.</p>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-title">
+              <h3 class="title">Accessories</h3>
+            </div>
+            <div
+              class="form-group"
+              style="max-width: 500px; margin-bottom: 30px"
+            >
+              <input
+                class="input"
+                type="text"
+                placeholder="Search for an accessory"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container" id="container"></div>
+    </div>
+
+    <div id="sidebar-overlay" onclick="closeSideBar()"></div>
+
+    <div id="product-sidebar">
+      <button id="sidebar-close" onclick="closeSideBar()">
+        <i class="fa fa-times"></i>
+      </button>
+
+      <div class="product-img">
+        <img id="sidebar-img" src="" alt="" />
+      </div>
+
+      <div class="product-body">
+        <p class="product-category">Accessory</p>
+        <h3 class="product-name" id="sidebar-title"></h3>
+        <h4 class="product-price" id="sidebar-price"></h4>
+        <p id="sidebar-description"></p>
+
+        <label for="sidebar-qty">Quantity</label>
+        <div class="input-number">
+          <input type="number" id="sidebar-qty" value="1" min="1" readonly />
+          <span class="qty-up" onclick="plus()">+</span>
+          <span class="qty-down" onclick="minus()">-</span>
+        </div>
+
+        <button class="primary-btn" onclick="addToCart()">Add to Cart</button>
       </div>
     </div>
     <script src="../assets/js/accessories.js"></script>
